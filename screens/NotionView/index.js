@@ -6,34 +6,17 @@ import {useFocusEffect, useRoute} from '@react-navigation/native';
 
 const NotionView = () => {
   const route = useRoute();
-  const [count, setCount] = useState(0);
   const [uri, setUri] = useState('');
 
   let screens = [];
 
   useFocusEffect(() => {
     screens = route.params?.screens;
-    const screenTime = route.params?.screenTime;
-    const interval = setInterval(() => {
-      updateCount();
-    }, (screenTime || 1) * 60 * 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
   });
 
   useEffect(() => {
-    setUri(screens[count]);
-  }, [count]);
-
-  const updateCount = () => {
-    if (count === screens.length - 1) {
-      setCount(0);
-    } else {
-      setCount(count + 1);
-    }
-  };
+    setUri(screens);
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1}}>

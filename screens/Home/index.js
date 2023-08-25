@@ -19,7 +19,6 @@ import {
   TouchableHighlight,
   findNodeHandle,
 } from 'react-native';
-import shuffle from 'lodash.shuffle';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import GalleryItem from '../../components/GalleryItem';
@@ -29,7 +28,6 @@ const {height} = Dimensions.get('window');
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
-  const [screenTime, setScreenTime] = useState(0);
   const [error, setError] = useState('');
   const [retryFocused, setRetryFocused] = useState(false);
 
@@ -47,11 +45,10 @@ const App = () => {
   const fetchScreensData = async () => {
     try {
       let data = await fetch(
-        'https://raw.githubusercontent.com/XORD-one/Notion-tv-app/main/SCREENS_DATA.json',
+        'https://raw.githubusercontent.com/BlockApex/blockapex-tv/main/SCREENS_DATA.json',
       );
       data = await data.json();
-      setItems(shuffle(data.screens));
-      setScreenTime(data.screenTimeInMinutes);
+      setItems(data.screens);
       setError('');
       setLoading(false);
     } catch (error) {
@@ -122,7 +119,6 @@ const App = () => {
                         title={item.name}
                         image={item.image}
                         screens={item.screens}
-                        screenTime={screenTime}
                         hasTVPreferredFocus={i === 0}
                         blockFocusRight={i === items.length - 1}
                       />
